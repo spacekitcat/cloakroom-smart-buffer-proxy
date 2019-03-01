@@ -11,6 +11,10 @@ class Proxy {
     this.internalCache = Buffer.concat([this.internalCache, appendContent]);
   }
 
+  getClockroomTicket() {
+    return ({id: 0x44})
+  }
+
   getReadOnlyBuffer() {
     const readOnlyInternalCacheRef = [...this.internalCache];
     Object.freeze(readOnlyInternalCacheRef);
