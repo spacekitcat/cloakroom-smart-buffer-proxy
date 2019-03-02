@@ -11,7 +11,7 @@ const { Proxy } = require('cloakroom-smart-buffer-proxy');
 const proxy = new Proxy(10)
 ```
 
-The client code can append data to an instance of the Cloakroom proy by calling `proxy.append(Buffer.from[0x55])`
+The client code can append data to an instance of the Cloakroom by calling `proxy.append(Buffer.from[0x55])`
 
 Cloakroom's internal buffer can be read as
 a read-only list, by calling `proxy.getReadOnlyBuffer()`.
@@ -26,7 +26,7 @@ You can call `proxy.readCloakroomTicket(ticket)`, which will figure out where th
 
 When a Cloakroom instance is insantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates to the client that the ticket has expired.
 
-## Usage
+## Guide
 
 ### Add to your project
 
@@ -87,10 +87,72 @@ The unit tests use Jest and the Yarn command below runs them.
 
 ```bash
 /lz77-nodejs-streams ‹master*› % yarn test
+yarn run v1.13.0
+$ jest --coverage
+ PASS  __tests__/proxy.test.js
+  The `Proxy` class
+    when the class is instantiated
+      ✓ should return the expected result (3ms)
+      ✓ should set the internal maximum size
+    The `getReadOnlyBuffer` method
+      when the `Proxy` instance is instantiated
+        ✓ should return an empty buffer object
+        ✓ should set the internal maximum size
+        ✓ should set the internal maximum size (alt data)
+      when the `Proxy` instance has received content
+        ✓ should return the expected contents (1ms)
+      when the `Proxy` instance has received two lots of content
+        ✓ should return the expected contents
+      when the `Proxy` instance has received two lots of contents that overflow the buffer size
+        ✓ should return the expected contents
+      when the client code attempts write operations against the returned buffer
+        ✓ should throw an exception (6ms)
+    The `getCloakroomTicket` method
+      when the `Proxy` instance has received one lot of content
+        ✓ should return a ticket with the expected id (start)
+      when the `Proxy` instance has received two lots of content
+        unbalanced append
+          ✓ should return a ticket with the expected id (0)
+          ✓ should return a ticket with the expected id (1)
+          ✓ should return a ticket with the expected id (2)
+          ✓ should return a ticket with the expected id (3), expired
+        balanced append
+          ✓ should return a ticket with the expected id (0) (1ms)
+          ✓ should return a ticket with the expected id (1)
+          ✓ should return a ticket with the expected id (2)
+          ✓ should return a null (3)
+      when the `Proxy` instance has received three lots of content
+        unbalanced append
+          ✓ should return a ticket with the expected id (0)
+          ✓ should return a ticket with the expected id (1) (1ms)
+          ✓ should return a ticket with the expected id (2)
+          ✓ should return a ticket with the expected id (3)
+          ✓ should return a ticket with the expected id (4) (1ms)
+        balanced append
+          ✓ should return a ticket with the expected id (0)
+          ✓ should return a ticket with the expected id (1)
+          ✓ should return a ticket with the expected id (2) (1ms)
+          ✓ should return a ticket with the expected id (3)
+          ✓ should return a ticket with the expected id (4)
+
+----------|----------|----------|----------|----------|-------------------|
+File      |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+----------|----------|----------|----------|----------|-------------------|
+All files |      100 |      100 |      100 |      100 |                   |
+ proxy.js |      100 |      100 |      100 |      100 |                   |
+----------|----------|----------|----------|----------|-------------------|
+Test Suites: 1 passed, 1 total
+Tests:       28 passed, 28 total
+Snapshots:   0 total
+Time:        2.434s
+Ran all test suites.
+✨  Done in 3.70s.
 ```
 
 ### Build
 
-```
-/lz77-nodejs-streams ‹master*› % yarn build
+```bash
+/cloakroom-smart-buffer-proxy ‹master*› % yarn build
+/cloakroom-smart-buffer-proxy ‹master*› % ls lib
+proxy        proxy.js     proxy.js.map
 ```
