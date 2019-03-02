@@ -1,6 +1,11 @@
 #!/bin/bash
 
-git diff-index --quiet HEAD -- || echo "WARNING: THERE ARE UNCOMITTED CHANGES INCLUDED IN THIS PUBLISH OPERATION" && exit;
+CHANGED=$(git diff-index --name-only HEAD --)
+
+if [ -n "$CHANGED" ]; then
+    echo "WARNING: THERE ARE UNCOMITTED CHANGES INCLUDED IN THIS PUBLISH OPERATION";
+    exit;
+fi
 
 echo "Preparing release..."
 npm version patch
