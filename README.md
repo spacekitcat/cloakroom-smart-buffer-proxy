@@ -13,7 +13,7 @@ The unit tests use Jest and the Yarn command below runs them.
 /lz77-nodejs-streams ‹master*› % yarn test
 ```
 
-### Building
+### Build
 
 ```
 /lz77-nodejs-streams ‹master*› % yarn build
