@@ -23,6 +23,9 @@ const { Proxy } = require('cloakroom-smart-buffer-proxy');
 ```
 
 ### Usage
+
+Note: you can run the code below from your browser if you go [here](https://runkit.com/spacekitcat/5c7ae8294ac2290012e7d733)
+
 ```js
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 
