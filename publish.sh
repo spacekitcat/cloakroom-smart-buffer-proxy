@@ -8,8 +8,9 @@ if [ -n "$CHANGED" ]; then
 fi
 
 echo "Preparing release..."
-npm version patch
+VERSION=$(npm version patch)
 git add package.json
-git commit -m "Publising new version";
-git push
+git commit -m "Publising $VERSION";
+git tag -l $VERSION
+git push --tags
 npm publish
