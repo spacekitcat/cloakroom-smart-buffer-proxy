@@ -210,6 +210,78 @@ describe('The `Proxy` class', () => {
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
           expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
         });
+
+        it('should return a ticket with the expected id (1)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [0x41, 0x43, expectedElementValue1, 0x49];
+          const expecteBufferContentTwo = [0x51, expectedElementValue2, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53];
+          const proxy = new Proxy(8);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (2)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [0x41, expectedElementValue1, 0x43, 0x49];
+          const expecteBufferContentTwo = [0x51, expectedElementValue2, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53];
+          const proxy = new Proxy(8);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (3)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [expectedElementValue1, 0x41, 0x43, 0x49];
+          const expecteBufferContentTwo = [expectedElementValue2, 0x51, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53];
+          const proxy = new Proxy(8);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (4)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [expectedElementValue1, 0x41, 0x43, expectedElementValue2];
+          const expecteBufferContentTwo = [0x49, 0x51, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53];
+          const proxy = new Proxy(8);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
       });
 
       describe('balanced append', () => {
@@ -228,6 +300,78 @@ describe('The `Proxy` class', () => {
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (1)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [0x41, 0x43, expectedElementValue1, 0x49];
+          const expecteBufferContentTwo = [0x51, expectedElementValue2, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53, 0x49, 0x11];
+          const proxy = new Proxy(10);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (2)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [0x41, expectedElementValue1, 0x43, 0x49];
+          const expecteBufferContentTwo = [0x51, expectedElementValue2, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53, 0x49, 0x11];
+          const proxy = new Proxy(10);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (3)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [expectedElementValue1, 0x41, 0x43, 0x49];
+          const expecteBufferContentTwo = [expectedElementValue2, 0x51, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53, 0x49, 0x11];
+          const proxy = new Proxy(10);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
+          expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
+        });
+
+        it('should return a ticket with the expected id (4)', () => {
+          const expectedElementValue1 = 0xFF;
+          const expectedElementValue2 = 0xFE;
+          const expecteBufferContentOne = [expectedElementValue1, 0x41, 0x43, expectedElementValue2];
+          const expecteBufferContentTwo = [0x49, 0x51, 0x53, 0x59];
+          const expecteBufferContentThree = [0x51, 0x53, 0x49, 0x11];
+          const proxy = new Proxy(10);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          proxy.append(Buffer.from(expecteBufferContentThree));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
           expect(proxy.readCloakroomTicket(clockroomTicket2)).toBe(expectedElementValue2);
         });
       });
