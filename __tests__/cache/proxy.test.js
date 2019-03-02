@@ -75,7 +75,7 @@ describe('The `Proxy` class', () => {
         const expecteBufferContents = [0x41, 0x43, 0x49, 0x44];
         const proxy = new Proxy();
         proxy.append(Buffer.from(expecteBufferContents));
-        const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+        const clockroomTicket = proxy.getCloakroomTicket(0);
         
         expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(0x44);
       });
@@ -90,7 +90,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(5);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -103,7 +103,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(5);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          const clockroomTicket = proxy.getCloakroomTicket(1);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -116,7 +116,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(5);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -129,7 +129,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(5);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(null);
@@ -144,7 +144,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(7);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -157,7 +157,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(7);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          const clockroomTicket = proxy.getCloakroomTicket(1);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -170,7 +170,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(7);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
@@ -183,7 +183,7 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(7);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentTwo));
         
           expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(null);
@@ -202,9 +202,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(8);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket1 = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket2 = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
@@ -220,9 +220,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(8);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          const clockroomTicket1 = proxy.getCloakroomTicket(1);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket2 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
@@ -238,9 +238,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(8);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket1 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket2 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
@@ -256,9 +256,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(8);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket1 = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket2 = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
@@ -274,9 +274,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(8);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          const clockroomTicket1 = proxy.getCloakroomTicket(4);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          const clockroomTicket2 = proxy.getCloakroomTicket(4);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
@@ -294,9 +294,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(10);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket1 = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          const clockroomTicket2 = proxy.getCloakroomTicket(0);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
@@ -312,9 +312,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(10);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          const clockroomTicket1 = proxy.getCloakroomTicket(1);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket2 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(expectedElementValue1);
@@ -330,9 +330,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(10);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket1 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          const clockroomTicket2 = proxy.getCloakroomTicket(2);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
@@ -348,9 +348,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(10);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket1 = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          const clockroomTicket2 = proxy.getCloakroomTicket(3);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);
@@ -366,9 +366,9 @@ describe('The `Proxy` class', () => {
           const proxy = new Proxy(10);
 
           proxy.append(Buffer.from(expecteBufferContentOne));
-          const clockroomTicket1 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          const clockroomTicket1 = proxy.getCloakroomTicket(4);
           proxy.append(Buffer.from(expecteBufferContentTwo));
-          const clockroomTicket2 = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 4);
+          const clockroomTicket2 = proxy.getCloakroomTicket(4);
           proxy.append(Buffer.from(expecteBufferContentThree));
         
           expect(proxy.readCloakroomTicket(clockroomTicket1)).toBe(null);

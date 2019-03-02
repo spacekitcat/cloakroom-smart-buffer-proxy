@@ -21,7 +21,7 @@ class Proxy {
     return flipped;
   }
 
-  getCloakroomTicket(cacheSnapshot, index) {
+  getCloakroomTicket(index) {
     return this._translate(index) + this.offset;
   }
 
