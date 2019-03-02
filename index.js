@@ -1,1 +1,3 @@
-exports.Proxy = require('./lib/proxy/proxy');
+const proxy = require('./lib/proxy');
+
+module.exports.Proxy = proxy.default;

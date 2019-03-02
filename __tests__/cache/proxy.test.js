@@ -1,4 +1,4 @@
-import Proxy from '../../src/proxy/proxy';
+import Proxy from '../../src/proxy';
 
 describe('The `Proxy` class', () => {
 
