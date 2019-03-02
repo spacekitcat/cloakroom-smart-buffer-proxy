@@ -17,7 +17,8 @@
   "scripts": {
     "test": "jest --coverage",
     "prebuild": "babel src --out-dir lib --source-maps",
-    "build": "npm run test"
+    "build": "npm run test",
+    "prepublish": "npm run build"
   },
   "dependencies": {}
 }
