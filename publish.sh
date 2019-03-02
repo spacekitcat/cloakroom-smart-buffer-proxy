@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git diff-index --quiet HEAD -- || echo "WARNING: THERE ARE UNCOMITTED CHANGES INCLUDED IN THIS PUBLISH OPERATION"; exit;
+git diff-index --quiet HEAD -- || echo "WARNING: THERE ARE UNCOMITTED CHANGES INCLUDED IN THIS PUBLISH OPERATION" && exit;
 
 echo "Preparing release..."
 npm version patch
