@@ -12,4 +12,4 @@ npm version patch
 git add package.json
 git commit -m "Publising new version";
 git push
-npm run publish
+realnpm publish
