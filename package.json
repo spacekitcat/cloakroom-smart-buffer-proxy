@@ -1,6 +1,6 @@
 {
   "name": "cloakroom-smart-buffer-proxy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A smart proxy for Node.js Buffer instances that provides and keeps track of references to specific subsets of a Buffer.",
   "main": "index.js",
   "repository": "https://github.com/spacekitcat/buffer-smart-reference-proxy",
@@ -17,5 +17,6 @@
     "test": "jest --coverage",
     "prebuild": "babel src --out-dir lib --source-maps",
     "build": "npm run test"
-  }
+  },
+  "dependencies": {}
 }
