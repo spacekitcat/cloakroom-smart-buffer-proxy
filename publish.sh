@@ -12,5 +12,4 @@ VERSION=$(npm version patch)
 git add package.json
 git commit -m "Publising $VERSION";
 git tag -a $VERSION -m "Releasing $VERSION"
-git push --tags
 npm publish
