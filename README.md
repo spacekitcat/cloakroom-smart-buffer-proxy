@@ -1,23 +1,45 @@
 # cloakroom-smart-buffer-proxy
 
-This is designed to manage a queue implemented as a Buffer. The main goal is to
-provide a way to keep track of a specific element as the Queue grows without
-having to waste resources searching. This has a use case in some work towards
-an experimental implementation of LZ77.
+This module is designed to reduce the number of repeated lookup operations carried out
+against a Node.js Buffer.
+
+Let's say that a downstream dependency starts with a new instance of Cloakroom, i.e.
+
+```javascript
+const { Proxy } = require('cloakroom-smart-buffer-proxy');
+
+const proxy = new Proxy(10)
+```
+
+The client code can append data to an instance of the Cloakroom proy by calling `proxy.append(Buffer.from[0x55])`
+
+Cloakroom's internal buffer can be read as
+a read-only list, by calling `proxy.getReadOnlyBuffer()`.
+
+The buffer indexes are in reverse order (i.e. The last item is always
+`0` and the first item is alway `proxy.getReadOnlyBuffer().length - 1`).
+
+If you find an item you want to save a reference to, you can call
+`const ticket = proxy.getCloakroomTicket($index)` which issues a "ticket" to represent the item.
+
+You can call `proxy.readCloakroomTicket(ticket)`, which will figure out where the ticket is now and resolve the ticket to its value.
+
+When a Cloakroom instance is insantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates to the client that the ticket has expired.
 
 ## Usage
 
 ### Add to your project
 
+*Change directory to your projects directory*
 ```bash
 your-rad-project <master*> % yarn add cloakroom-smart-buffer-proxy --dev
 ```
 
-*and then you can do*
+*and then do*
 ```js
 import { Proxy } from 'cloakroom-smart-buffer-proxy';
 ```
-*or, if you don't like Babel's syntactic sugar, you can do:*
+*or, if you don't use the syntactic sugar provided by Babel, do:*
 ```js
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 ```
