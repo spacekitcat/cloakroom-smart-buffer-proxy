@@ -6,6 +6,10 @@ describe('The `Proxy` class', () => {
     it('should return the expected result', () => {
       expect(new Proxy().getReadOnlyBuffer()).toMatchObject(Buffer.from([]));
     });
+
+    it('should set the internal maximum size', () => {
+      expect(new Proxy().getMaximumSize()).toBe(32000);
+    });
   });
 
   describe('The `getReadOnlyBuffer` method', () => {
@@ -45,6 +49,17 @@ describe('The `Proxy` class', () => {
       });
     });
 
+    describe('when the `Proxy` instance has received two lots of contents that overflow the buffer size', () => {
+      it('should return the expected contents', () => {
+        const expecteBufferContentsOne = [0x41, 0x43, 0x49];
+        const expecteBufferContentsTwo = [0x55, 0x60, 0x65];
+        const proxy = new Proxy(4);
+        proxy.append(Buffer.from(expecteBufferContentsOne));
+        proxy.append(Buffer.from(expecteBufferContentsTwo));
+        expect(proxy.getReadOnlyBuffer()).toMatchObject([0x49, 0x55, 0x60, 0x65]);
+      });
+    });
+
     describe('when the client code attempts write operations against the returned buffer', () => {
       it('should throw an exception', () => {
         const returnedBufferRef = new Proxy().getReadOnlyBuffer();
@@ -67,16 +82,71 @@ describe('The `Proxy` class', () => {
     });
 
     describe('when the `Proxy` instance has received two lots of content', () => {
-      it('should return a ticket with the expected id (end)', () => {
-        const expecteBufferContentOne = [0x41, 0x43, 0x49, 0x44];
-        const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
-        const proxy = new Proxy();
+      describe('balanced append', () => {
+        it('should return a ticket with the expected id (0)', () => {
+          const expectedElementValue = 0xFF;
+          const expecteBufferContentOne = [0x41, 0x43, 0x49, expectedElementValue];
+          const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
+          const proxy = new Proxy(7);
 
-        proxy.append(Buffer.from(expecteBufferContentOne));
-        const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
-        proxy.append(Buffer.from(expecteBufferContentTwo));
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 0);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
         
-        expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(0x49);
+          expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
+        });
+
+        it('should return a ticket with the expected id (1)', () => {
+          const expectedElementValue = 0xFF;
+          const expecteBufferContentOne = [0x41, 0x43, expectedElementValue, 0x49];
+          const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
+          const proxy = new Proxy(7);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 1);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
+        });
+
+        it('should return a ticket with the expected id (2)', () => {
+          const expectedElementValue = 0xFF;
+          const expecteBufferContentOne = [0x41, expectedElementValue, 0x43, 0x49];
+          const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
+          const proxy = new Proxy(7);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
+        });
+
+        it('should return a ticket with the expected id (2)', () => {
+          const expectedElementValue = 0xFF;
+          const expecteBufferContentOne = [0x41, expectedElementValue, 0x43, 0x49];
+          const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
+          const proxy = new Proxy(7);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 2);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(expectedElementValue);
+        });
+
+        it('should return a null (3)', () => {
+          const expectedElementValue = 0xFF;
+          const expecteBufferContentOne = [expectedElementValue, 0x41, 0x43, 0x49];
+          const expecteBufferContentTwo = [0x51, 0x53, 0x59, 0x54];
+          const proxy = new Proxy(7);
+
+          proxy.append(Buffer.from(expecteBufferContentOne));
+          const clockroomTicket = proxy.getCloakroomTicket(proxy.getReadOnlyBuffer(), 3);
+          proxy.append(Buffer.from(expecteBufferContentTwo));
+        
+          expect(proxy.readCloakroomTicket(clockroomTicket)).toBe(null);
+        });
       });
     });
   });
