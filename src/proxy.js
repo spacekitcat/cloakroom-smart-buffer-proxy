@@ -12,6 +12,7 @@ class Proxy {
     const overflow = this.internalCache.length - this.maximumSize;
     if (overflow > 0) {
       this.offset -= overflow;
+      this.offset = this.offset % this.maximumSize;
       this.internalCache = this.internalCache.slice(this.internalCache.length - this.maximumSize);
     }
   }
