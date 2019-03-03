@@ -24,16 +24,22 @@ class Proxy {
     return flipped;
   }
 
+  _resolveValue(ticketId) {
+    const internalCacheArray = ticketId + this.offset + 1;
+    const resolvedValue = this.internalCache[internalCacheArray];
+    return resolvedValue ? resolvedValue : null;
+  }
+
   createTicket(index) {
-    return this._translate(index) + this.offset;
+    const id = this._translate(index) + this.offset;
+    return { id, value: this._resolveValue(id) };
   }
 
   resolveTicket(cloakRoomTicket) {
-    const internalCacheArray = cloakRoomTicket + this.offset + 1;
-    const resolvedValue = this.internalCache[internalCacheArray];
-    const value = resolvedValue ? resolvedValue : null;
+    const internalCacheArray = cloakRoomTicket.id + this.offset + 1;
 
-    if (value === null) {
+    const value = this._resolveValue(cloakRoomTicket.id);
+    if (value === null || value !== cloakRoomTicket.value) {
       return null;
     }
 
