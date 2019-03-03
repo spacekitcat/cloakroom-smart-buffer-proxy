@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 class Proxy {
   constructor(maximumSize = 32000) {
     this.offset = 0;
     this.internalCache = Buffer.from([]);
-    this.maximumSize = maximumSize
+    this.maximumSize = maximumSize;
   }
 
   append(appendContent) {
@@ -13,7 +13,9 @@ class Proxy {
     if (overflow > 0) {
       this.offset -= overflow;
       this.offset = this.offset % this.maximumSize;
-      this.internalCache = this.internalCache.slice(this.internalCache.length - this.maximumSize);
+      this.internalCache = this.internalCache.slice(
+        this.internalCache.length - this.maximumSize
+      );
     }
   }
 
@@ -22,13 +24,22 @@ class Proxy {
     return flipped;
   }
 
-  getCloakroomTicket(index) {
+  createTicket(index) {
     return this._translate(index) + this.offset;
   }
 
-  readCloakroomTicket(cloakRoomTicket) {
-    const value = this.internalCache[cloakRoomTicket + this.offset + 1];
-    return value ? value : null;
+  resolveTicket(cloakRoomTicket) {
+    const internalCacheArray = cloakRoomTicket + this.offset + 1;
+    const resolvedValue = this.internalCache[internalCacheArray];
+    const value = resolvedValue ? resolvedValue : null;
+
+    if (value === null) {
+      return null;
+    }
+
+    const offset = this.internalCache.length - (internalCacheArray + 1);
+
+    return { value, offset };
   }
 
   getMaximumSize() {

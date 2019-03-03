@@ -2,8 +2,8 @@ import Proxy from '../src/proxy';
 import randomstring from 'randomstring';
 
 const verifyTicket = (proxy, ticketDescriptor, index) => {
-  console.log(`[${index}] Expecting ticket, ${ticketDescriptor.ticket}, to resolve to, ${ticketDescriptor.expectedValue}, actually: ${proxy.readCloakroomTicket(ticketDescriptor.ticket)}`);
-  expect(proxy.readCloakroomTicket(ticketDescriptor.ticket)).toBe(ticketDescriptor.expectedValue);
+  console.log(`[${index}] Expecting ticket, ${ticketDescriptor.ticket}, to resolve to, ${ticketDescriptor.expectedValue}, actually: ${proxy.resolveTicket(ticketDescriptor.ticket).value}`);
+  expect(proxy.resolveTicket(ticketDescriptor.ticket).value).toBe(ticketDescriptor.expectedValue);
 };
 
 const saveTicket = (savedTickets, ticket, expectedValue) => {
@@ -28,7 +28,7 @@ describe('Proxy offset rollover scenario', () => {
 
     const savedTickets = [];
     for (let i = 0; i < 5; ++i) {
-      saveTicket(savedTickets, proxy.getCloakroomTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
     }
     checkTicketListIntegrity(savedTickets, proxy);
   });
