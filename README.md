@@ -9,24 +9,18 @@ const { Proxy } = require('cloakroom-smart-buffer-proxy');
 
 const proxy = new Proxy(10)
 ```
-
 2. Items can be added to Cloakroom like so:
 ```javascript
 proxy.append(Buffer.from[0x55])
 ```
-
 3. Its internal buffer can be read as a read-only list by calling:
 ```javascript
 proxy.getReadOnlyBuffer()
 ```
-N.B. The buffer indexes are in reverse order (i.e. The last item is always
-`0` and the first item is alway `proxy.getReadOnlyBuffer().length - 1`).  
-
 4. Tickets (which are used to retrieve items) can be created like this:
 ```javascript
 const ticket = proxy.createTicket($index)
 ```
-
 5. Tickets can be retrieved with the code below:
 ```javascript
 proxy.resolveTicket(ticket)
