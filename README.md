@@ -219,3 +219,7 @@ https://docs.npmjs.com/getting-started/using-two-factor-authentication
 Enter OTP: ******
 + cloakroom-smart-buffer-proxy@2.0.1
 ```
+
+## Notes
+
+The list returned by `proxy.getReadOnlyBuffer()` is in reverse order, so if you want the last item, you would do `proxy.createTicket(0)`.
