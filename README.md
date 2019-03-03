@@ -1,7 +1,7 @@
 # cloakroom-smart-buffer-proxy
 
-This module is designed to reduce the number of repeated lookup operations carried out
-against a Node.js Buffer.
+## What the heck is this?
+This module is designed to reduce the number of repeated lookup operations against a Node.js Buffer.
 
 1. Let's say a downstream dependency starts with a new instance of Cloakroom:
 ```javascript
@@ -81,7 +81,6 @@ console.log(proxy.resolveTicket(ticket2)); // null
 console.log(proxy.resolveTicket(ticket3)); // { value: 97, offset: 1 }
 console.log(proxy.resolveTicket(ticket4)); // null
 ```
-
 
 ## Unit tests
 
