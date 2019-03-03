@@ -20,11 +20,11 @@ The buffer indexes are in reverse order (i.e. The last item is always
 `0` and the first item is alway `proxy.getReadOnlyBuffer().length - 1`).
 
 If you find an item you want to save a reference to, you can call
-`const ticket = proxy.createTicket($index)` which issues a "ticket" to represent the item.
+`const ticket = proxy.createTicket($index)` which issues a ticket to represent the item.
 
 You can call `proxy.resolveTicket(ticket)`, which will figure out where the ticket is now and resolve the ticket to its value.
 
-When a Cloakroom instance is insantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates to the client that the ticket has expired.
+When a Cloakroom instance is instantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates to the client that the ticket has expired.
 
 ## Guide
 
