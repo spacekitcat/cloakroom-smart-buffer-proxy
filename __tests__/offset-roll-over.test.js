@@ -33,7 +33,7 @@ describe('Proxy offset rollover scenario', () => {
       proxy.append(Buffer.from(randomstring.generate(1)));
     }
 
-    const savedTickets = [];
+    let savedTickets = [];
     for (let i = 0; i < 5; ++i) {
       saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
     }
@@ -44,5 +44,18 @@ describe('Proxy offset rollover scenario', () => {
     }
 
     checkTicketListInvalidated(savedTickets, proxy);
+
+    savedTickets = [];
+    for (let i = 0; i < 5; ++i) {
+      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+    }
+    checkTicketListIntegrity(savedTickets, proxy);
+
+    for (let i = 0; i < 5; ++i) {
+      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+    }
+    
+    checkTicketListIntegrity(savedTickets, proxy);
+
   });
 });
