@@ -2,7 +2,7 @@ import Proxy from '../src/proxy';
 import randomstring from 'randomstring';
 
 const verifyTicket = (proxy, ticketDescriptor, index) => {
-  console.log(`[${index}] Expecting ticket, ${ticketDescriptor.ticket}, to resolve to, ${ticketDescriptor.expectedValue}, actually: ${proxy.resolveTicket(ticketDescriptor.ticket).value}`);
+  console.log(`[${index}] Expecting ticket '${ticketDescriptor.ticket}' to resolve to '${ticketDescriptor.expectedValue}', actually got: ${proxy.resolveTicket(ticketDescriptor.ticket).value}`);
   expect(proxy.resolveTicket(ticketDescriptor.ticket).value).toBe(ticketDescriptor.expectedValue);
 };
 

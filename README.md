@@ -86,22 +86,21 @@ console.log(proxy.resolveTicket(ticket4)); // null
 The unit tests use Jest and the Yarn command below runs them.
 
 ```bash
-/cloakroom-smart-buffer-proxy ‹master*› % yarn test                                                                                             
 yarn run v1.13.0
 $ jest --coverage
  PASS  __tests__/offset-roll-over.test.js
   ● Console
 
     console.log __tests__/offset-roll-over.test.js:5
-      [0] Expecting ticket, 8, to resolve to, 120, actually: 120
+      [0] Expecting ticket '8' to resolve to '68', actually got: 68
     console.log __tests__/offset-roll-over.test.js:5
-      [1] Expecting ticket, 7, to resolve to, 99, actually: 99
+      [1] Expecting ticket '7' to resolve to '115', actually got: 115
     console.log __tests__/offset-roll-over.test.js:5
-      [2] Expecting ticket, 6, to resolve to, 84, actually: 84
+      [2] Expecting ticket '6' to resolve to '111', actually got: 111
     console.log __tests__/offset-roll-over.test.js:5
-      [3] Expecting ticket, 5, to resolve to, 114, actually: 114
+      [3] Expecting ticket '5' to resolve to '55', actually got: 55
     console.log __tests__/offset-roll-over.test.js:5
-      [4] Expecting ticket, 4, to resolve to, 117, actually: 117
+      [4] Expecting ticket '4' to resolve to '103', actually got: 103
 
  PASS  __tests__/proxy.test.js
 ----------|----------|----------|----------|----------|-------------------|
@@ -114,9 +113,9 @@ All files |      100 |      100 |      100 |      100 |                   |
 Test Suites: 2 passed, 2 total
 Tests:       29 passed, 29 total
 Snapshots:   0 total
-Time:        2.568s
+Time:        3.371s
 Ran all test suites.
-✨  Done in 3.58s.
+✨  Done in 4.76s.
 ```
 
 ### Build
@@ -169,15 +168,15 @@ Successfully compiled 1 file with Babel.
   ● Console
 
     console.log __tests__/offset-roll-over.test.js:5
-      [0] Expecting ticket, 8, to resolve to, 106, actually: 106
+      [0] Expecting ticket '8' to resolve to '68', actually got: 68
     console.log __tests__/offset-roll-over.test.js:5
-      [1] Expecting ticket, 7, to resolve to, 71, actually: 71
+      [1] Expecting ticket '7' to resolve to '115', actually got: 115
     console.log __tests__/offset-roll-over.test.js:5
-      [2] Expecting ticket, 6, to resolve to, 68, actually: 68
+      [2] Expecting ticket '6' to resolve to '111', actually got: 111
     console.log __tests__/offset-roll-over.test.js:5
-      [3] Expecting ticket, 5, to resolve to, 90, actually: 90
+      [3] Expecting ticket '5' to resolve to '55', actually got: 55
     console.log __tests__/offset-roll-over.test.js:5
-      [4] Expecting ticket, 4, to resolve to, 69, actually: 69
+      [4] Expecting ticket '4' to resolve to '103', actually got: 103
 
  PASS  __tests__/proxy.test.js
 ----------|----------|----------|----------|----------|-------------------|
@@ -216,6 +215,6 @@ There was an error while trying authentication due to OTP (One-Time-Password).
 The One-Time-Password is generated via applications like Authy or
 Google Authenticator, for more information see:
 https://docs.npmjs.com/getting-started/using-two-factor-authentication
-Enter OTP: 596027
-+ cloakroom-smart-buffer-proxy@1.3.24
+Enter OTP: ******
++ cloakroom-smart-buffer-proxy@2.0.1
 ```
