@@ -3,43 +3,51 @@
 This module is designed to reduce the number of repeated lookup operations carried out
 against a Node.js Buffer.
 
-Let's say that a downstream dependency starts with a new instance of Cloakroom, i.e.
-
+1. Let's say a downstream dependency starts with a new instance of Cloakroom:
 ```javascript
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 
 const proxy = new Proxy(10)
 ```
 
-The client code can append data to an instance of Cloakroom by calling `proxy.append(Buffer.from[0x55])`
+2. Items can be added to Cloakroom like so:
+```javascript
+proxy.append(Buffer.from[0x55])
+```
 
-Cloakroom's internal buffer can be read as
-a read-only list, by calling `proxy.getReadOnlyBuffer()`.
+3. Its internal buffer can be read as a read-only list by calling:
+```javascript
+proxy.getReadOnlyBuffer()
+```
+N.B. The buffer indexes are in reverse order (i.e. The last item is always
+`0` and the first item is alway `proxy.getReadOnlyBuffer().length - 1`).  
 
-The buffer indexes are in reverse order (i.e. The last item is always
-`0` and the first item is alway `proxy.getReadOnlyBuffer().length - 1`).
+4. Tickets (which are used to retrieve items) can be created like this:
+```javascript
+const ticket = proxy.createTicket($index)
+```
 
-If you find an item you want to save a reference to, you can call
-`const ticket = proxy.createTicket($index)` which issues a ticket to represent the item.
+5. Tickets can be retrieved with the code below:
+```javascript
+proxy.resolveTicket(ticket)
+```
 
-You can call `proxy.resolveTicket(ticket)`, which will figure out where the ticket is now and resolve the ticket to its value.
-
-When a Cloakroom instance is instantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates to the client that the ticket has expired.
+When a Cloakroom instance is instantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates the expiry to the client code.
 
 ## Guide
 
 ### Add to your project
 
-*Change directory to your projects directory*
+*Change directory to your projects root and then run*
 ```bash
-your-rad-project <master*> % yarn add cloakroom-smart-buffer-proxy --dev
+your-rad-project <master*> % yarn add cloakroom-smart-buffer-proxy
 ```
 
 *and then do*
 ```js
 import { Proxy } from 'cloakroom-smart-buffer-proxy';
 ```
-*or, if you don't use the syntactic sugar provided by Babel, do:*
+*or, if you don't use the syntactic sugar provided by Babel, you can use*
 ```js
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 ```
