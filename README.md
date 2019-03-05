@@ -3,25 +3,25 @@
 ## What the heck is this?
 This module is designed to reduce the number of repeated lookup operations against a Node.js Buffer.
 
-1. Let's say a downstream dependency starts with a new instance of Cloakroom:
+Let's say a downstream dependency starts with a new instance of Cloakroom:
 ```javascript
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 
 const proxy = new Proxy(10)
 ```
-2. Items can be added to Cloakroom like so:
+Items can be added to Cloakroom like so:
 ```javascript
 proxy.append(Buffer.from[0x55])
 ```
-3. Its internal buffer can be read as a read-only list by calling:
+Its internal buffer can be read as a read-only list by calling:
 ```javascript
 proxy.getReadOnlyBuffer()
 ```
-4. Tickets (which are used to retrieve items) can be created like this:
+Tickets (which are used to retrieve items) can be created like this:
 ```javascript
 const ticket = proxy.createTicket($index)
 ```
-5. Tickets can be retrieved with the code below:
+Tickets can be retrieved with the code below:
 ```javascript
 proxy.resolveTicket(ticket)
 ```
@@ -81,6 +81,15 @@ console.log(proxy.resolveTicket(ticket2)); // null
 console.log(proxy.resolveTicket(ticket3)); // { value: 97, offset: 1 }
 console.log(proxy.resolveTicket(ticket4)); // null
 ```
+## API notes
+#### Method: createTicket
+
+You could argue that the call to `createTicket` is unnecessary, but it is important
+to create the tickets through this method because it decouples your code from the 
+implementation details of `Cloakroom`. If the ticket format is changed, it shouldn't
+have any impact on client code. The format is likely to change. A second reason for
+`createMethod` is that I plan on exploring asynchronous implementation of `Cloakroom`,
+so it would become critical for keeping things thread safe.
 
 ## Unit tests
 
