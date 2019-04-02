@@ -2,29 +2,41 @@ import Proxy from '../src/proxy';
 import randomstring from 'randomstring';
 
 const verifyTicket = (proxy, ticketDescriptor, index) => {
-  console.log(`[${index}] Expecting ticket '${ticketDescriptor.ticket}' to resolve to '${ticketDescriptor.expectedValue}', actually got: ${proxy.resolveTicket(ticketDescriptor.ticket)}`);
-  expect(proxy.resolveTicket(ticketDescriptor.ticket).value).toBe(ticketDescriptor.expectedValue);
+  console.log(
+    `[${index}] Expecting ticket '${ticketDescriptor.ticket}' to resolve to '${
+      ticketDescriptor.expectedValue
+    }', actually got: ${proxy.resolveTicket(ticketDescriptor.ticket)}`
+  );
+  expect(proxy.resolveTicket(ticketDescriptor.ticket).value).toBe(
+    ticketDescriptor.expectedValue
+  );
 };
 
 const saveTicket = (savedTickets, ticket, expectedValue) => {
   savedTickets.push({
-      ticket: ticket,
-      expectedValue: expectedValue
-  })
+    ticket: ticket,
+    expectedValue: expectedValue
+  });
 };
 
 const checkTicketListIntegrity = (savedTickets, proxy) => {
   savedTickets.forEach((ticketDescriptor, index) => {
-      verifyTicket(proxy, ticketDescriptor, index)
+    verifyTicket(proxy, ticketDescriptor, index);
   });
-}
+};
 
 const checkTicketListInvalidated = (savedTickets, proxy) => {
   savedTickets.forEach((ticketDescriptor, index) => {
-    console.log(`[${index}] Expecting ticket '${ticketDescriptor.ticket.id}' to resolve to 'null', actually got: ${proxy.resolveTicket(ticketDescriptor.ticket)}`);
+    console.log(
+      `[${index}] Expecting ticket '${
+        ticketDescriptor.ticket.id
+      }' to resolve to 'null', actually got: ${proxy.resolveTicket(
+        ticketDescriptor.ticket
+      )}`
+    );
     expect(proxy.resolveTicket(ticketDescriptor.ticket)).toBe(null);
   });
-}
+};
 
 describe('Proxy offset rollover scenario', () => {
   it('should rollover', () => {
@@ -35,7 +47,11 @@ describe('Proxy offset rollover scenario', () => {
 
     let savedTickets = [];
     for (let i = 0; i < 5; ++i) {
-      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+      saveTicket(
+        savedTickets,
+        proxy.createTicket(i),
+        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+      );
     }
     checkTicketListIntegrity(savedTickets, proxy);
 
@@ -47,15 +63,22 @@ describe('Proxy offset rollover scenario', () => {
 
     savedTickets = [];
     for (let i = 0; i < 5; ++i) {
-      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+      saveTicket(
+        savedTickets,
+        proxy.createTicket(i),
+        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+      );
     }
     checkTicketListIntegrity(savedTickets, proxy);
 
     for (let i = 0; i < 5; ++i) {
-      saveTicket(savedTickets, proxy.createTicket(i), proxy.getReadOnlyBuffer()[proxy.getReadOnlyBuffer().length - i - 1]);
+      saveTicket(
+        savedTickets,
+        proxy.createTicket(i),
+        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+      );
     }
-    
-    checkTicketListIntegrity(savedTickets, proxy);
 
+    checkTicketListIntegrity(savedTickets, proxy);
   });
 });

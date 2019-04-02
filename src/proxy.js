@@ -59,7 +59,7 @@ class Proxy {
     return this.maximumSize;
   }
 
-  getReadOnlyBuffer() {
+  getBufferCopy() {
     return this.readOnlyBuffer;
   }
 }
