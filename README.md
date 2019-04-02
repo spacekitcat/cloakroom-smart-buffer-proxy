@@ -1,29 +1,39 @@
 # cloakroom-smart-buffer-proxy
 
 ## What the heck is this?
+
 This module is designed to reduce the number of repeated lookup operations against a Node.js Buffer.
 
 Let's say a downstream dependency starts with a new instance of Cloakroom:
+
 ```javascript
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 
-const proxy = new Proxy(10)
+const proxy = new Proxy(10);
 ```
+
 Items can be added to Cloakroom like so:
+
 ```javascript
-proxy.append(Buffer.from[0x55])
+proxy.append(Buffer.from[0x55]);
 ```
-Its internal buffer can be read as a read-only list by calling:
+
+A copy of the internal Buffer can be read by calling:
+
 ```javascript
-proxy.getReadOnlyBuffer()
+proxy.getReadOnlyBuffer();
 ```
+
 Tickets (which are used to retrieve items) can be created like this:
+
 ```javascript
-const ticket = proxy.createTicket($index)
+const ticket = proxy.createTicket($index);
 ```
+
 Tickets can be retrieved with the code below:
+
 ```javascript
-proxy.resolveTicket(ticket)
+proxy.resolveTicket(ticket);
 ```
 
 When a Cloakroom instance is instantiated, the maximum size can be passed in as the first parameter to the constructor. The default is `32000`. The Proxy class will ensure that the maximum size isn't exceeded, deleting the oldest entries to make space to accomodate new items when it has to. Tickets that reference deleted items become expired and will resovle to `null`, which indicates the expiry to the client code.
@@ -32,16 +42,20 @@ When a Cloakroom instance is instantiated, the maximum size can be passed in as 
 
 ### Add to your project
 
-*Change directory to your projects root and then run*
+_Change directory to your projects root and then run_
+
 ```bash
 your-rad-project <master*> % yarn add cloakroom-smart-buffer-proxy
 ```
 
-*and then do*
+_and then do_
+
 ```js
 import { Proxy } from 'cloakroom-smart-buffer-proxy';
 ```
-*or, if you don't use the syntactic sugar provided by Babel, you can use*
+
+_or, if you don't use the syntactic sugar provided by Babel, you can use_
+
 ```js
 const { Proxy } = require('cloakroom-smart-buffer-proxy');
 ```
@@ -81,15 +95,21 @@ console.log(proxy.resolveTicket(ticket2)); // null
 console.log(proxy.resolveTicket(ticket3)); // { value: 97, offset: 1 }
 console.log(proxy.resolveTicket(ticket4)); // null
 ```
+
 ## API notes
+
 #### Method: createTicket
 
 You could argue that the call to `createTicket` is unnecessary, but it is important
-to create the tickets through this method because it decouples your code from the 
+to create the tickets through this method because it decouples your code from the
 implementation details of `Cloakroom`. If the ticket format is changed, it shouldn't
 have any impact on client code. The format is likely to change. A second reason for
 `createMethod` is that I plan on exploring asynchronous implementation of `Cloakroom`,
 so it would become critical for keeping things thread safe.
+
+### Method: append
+
+Takes a Buffer as its first argument and it adds it the the internal storage.
 
 ## Unit tests
 
@@ -142,7 +162,7 @@ proxy        proxy.js     proxy.js.map
 publishes to NPM.
 
 ```bash
-/cloakroom-smart-buffer-proxy ‹master› % ./publish.sh                                                                                           
+/cloakroom-smart-buffer-proxy ‹master› % ./publish.sh
 Preparing release...
 On branch master
 nothing to commit, working tree clean
@@ -201,25 +221,25 @@ Tests:       29 passed, 29 total
 Snapshots:   0 total
 Time:        1.953s
 Ran all test suites.
-npm notice 
+npm notice
 npm notice 📦  cloakroom-smart-buffer-proxy@1.3.24
-npm notice === Tarball Contents === 
-npm notice 794B  package.json          
-npm notice 77B   index.js              
-npm notice 6.7kB README.md             
-npm notice 1.3kB lib/proxy.js          
-npm notice 2.8kB lib/proxy.js.map      
-npm notice 1.3kB lib/proxy/proxy.js    
+npm notice === Tarball Contents ===
+npm notice 794B  package.json
+npm notice 77B   index.js
+npm notice 6.7kB README.md
+npm notice 1.3kB lib/proxy.js
+npm notice 2.8kB lib/proxy.js.map
+npm notice 1.3kB lib/proxy/proxy.js
 npm notice 2.7kB lib/proxy/proxy.js.map
-npm notice === Tarball Details === 
-npm notice name:          cloakroom-smart-buffer-proxy            
-npm notice version:       1.3.24                                  
-npm notice package size:  3.7 kB                                  
-npm notice unpacked size: 15.7 kB                                 
+npm notice === Tarball Details ===
+npm notice name:          cloakroom-smart-buffer-proxy
+npm notice version:       1.3.24
+npm notice package size:  3.7 kB
+npm notice unpacked size: 15.7 kB
 npm notice shasum:        825ff519b03fe2b388ff2dd649a7b205ff40a8b2
 npm notice integrity:     sha512-uAa6feZ45/X5F[...]kkxXDQdfxvR/Q==
-npm notice total files:   7                                       
-npm notice 
+npm notice total files:   7
+npm notice
 npm ERR! publish Failed PUT 401
 There was an error while trying authentication due to OTP (One-Time-Password).
 The One-Time-Password is generated via applications like Authy or

@@ -37,7 +37,9 @@ describe('The `Proxy` class', () => {
         const expecteBufferContents = [0x41, 0x43, 0x49, 0x44];
         const proxy = new Proxy();
         proxy.append(Buffer.from(expecteBufferContents));
-        expect(proxy.getReadOnlyBuffer()).toMatchObject(expecteBufferContents);
+        expect(proxy.getReadOnlyBuffer()).toMatchObject(
+          Buffer.from(expecteBufferContents)
+        );
       });
     });
 
@@ -49,7 +51,7 @@ describe('The `Proxy` class', () => {
         proxy.append(Buffer.from(expecteBufferContentsOne));
         proxy.append(Buffer.from(expecteBufferContentsTwo));
         expect(proxy.getReadOnlyBuffer()).toMatchObject(
-          expecteBufferContentsOne.concat(expecteBufferContentsTwo)
+          Buffer.from(expecteBufferContentsOne.concat(expecteBufferContentsTwo))
         );
       });
     });
@@ -61,19 +63,9 @@ describe('The `Proxy` class', () => {
         const proxy = new Proxy(4);
         proxy.append(Buffer.from(expecteBufferContentsOne));
         proxy.append(Buffer.from(expecteBufferContentsTwo));
-        expect(proxy.getReadOnlyBuffer()).toMatchObject([
-          0x49,
-          0x55,
-          0x60,
-          0x65
-        ]);
-      });
-    });
-
-    describe('when the client code attempts write operations against the returned buffer', () => {
-      it('should throw an exception', () => {
-        const returnedBufferRef = new Proxy().getReadOnlyBuffer();
-        expect(() => returnedBufferRef.push('a')).toThrow();
+        expect(proxy.getReadOnlyBuffer()).toMatchObject(
+          Buffer.from([0x49, 0x55, 0x60, 0x65])
+        );
       });
     });
   });

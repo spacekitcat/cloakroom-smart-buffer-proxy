@@ -23,8 +23,7 @@ class Proxy {
   }
 
   _updateReadOnlyBuffer() {
-    const readOnlyInternalCacheRef = [...this.internalCache];
-    this.readOnlyBuffer = Object.freeze(readOnlyInternalCacheRef);
+    this.readOnlyBuffer = Buffer.from(this.internalCache);
   }
 
   _translate(index) {
