@@ -50,7 +50,7 @@ describe('Proxy offset rollover scenario', () => {
       saveTicket(
         savedTickets,
         proxy.createTicket(i),
-        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+        proxy.getInternalBuffer()[proxy.getInternalBuffer().length - i - 1]
       );
     }
     checkTicketListIntegrity(savedTickets, proxy);
@@ -66,7 +66,7 @@ describe('Proxy offset rollover scenario', () => {
       saveTicket(
         savedTickets,
         proxy.createTicket(i),
-        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+        proxy.getInternalBuffer()[proxy.getInternalBuffer().length - i - 1]
       );
     }
     checkTicketListIntegrity(savedTickets, proxy);
@@ -75,7 +75,7 @@ describe('Proxy offset rollover scenario', () => {
       saveTicket(
         savedTickets,
         proxy.createTicket(i),
-        proxy.getBufferCopy()[proxy.getBufferCopy().length - i - 1]
+        proxy.getInternalBuffer()[proxy.getInternalBuffer().length - i - 1]
       );
     }
 

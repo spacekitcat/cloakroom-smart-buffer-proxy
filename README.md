@@ -18,10 +18,10 @@ Items can be added to Cloakroom like so:
 proxy.append(Buffer.from[0x55]);
 ```
 
-A copy of the internal Buffer can be read by calling:
+The internal Buffer can be read by calling:
 
 ```javascript
-proxy.getBufferCopy();
+proxy.getInternalBuffer();
 ```
 
 Tickets (which are used to retrieve items) can be created like this:
@@ -71,7 +71,7 @@ const { Proxy } = require('cloakroom-smart-buffer-proxy');
 const proxy = new Proxy(10);
 
 proxy.append(Buffer.from([69, 68, 67, 66, 65]));
-console.log(proxy.getBufferCopy()); // [69, 68, 67, 66, 65]
+console.log(proxy.getInternalBuffer()); // [69, 68, 67, 66, 65]
 
 const ticket1 = proxy.createTicket(0); // Get a ticket for item zero, 65
 console.log(proxy.resolveTicket(ticket1)); // { value: 65, offset 0 }
@@ -79,7 +79,7 @@ const ticket2 = proxy.createTicket(4); // Get a ticket for item four, 69
 console.log(proxy.resolveTicket(ticket2)); // { value: 69, offset: 4 }
 
 proxy.append(Buffer.from([101, 100, 99, 98, 97]));
-console.log(proxy.getBufferCopy()); // [69, 68, 67, 66, 65, 101, 100, 99, 98, 97]
+console.log(proxy.getInternalBuffer()); // [69, 68, 67, 66, 65, 101, 100, 99, 98, 97]
 console.log(proxy.resolveTicket(ticket1)); // { value: 65, offset: 5 }
 console.log(proxy.resolveTicket(ticket2)); // { value: 69, offset: 9 }
 
@@ -89,7 +89,7 @@ const ticket4 = proxy.createTicket(9); // Get a ticket for item nine, 69
 console.log(proxy.resolveTicket(ticket4)); // { value: 69, offset: 9 }
 
 proxy.append(Buffer.from([0x78]));
-console.log(proxy.getBufferCopy()); // [68, 67, 66, 65, 101, 100, 99, 98, 97, 120]
+console.log(proxy.getInternalBuffer()); // [68, 67, 66, 65, 101, 100, 99, 98, 97, 120]
 console.log(proxy.resolveTicket(ticket1)); // { value: 65, offset: 6 }
 console.log(proxy.resolveTicket(ticket2)); // null
 console.log(proxy.resolveTicket(ticket3)); // { value: 97, offset: 1 }
@@ -110,6 +110,14 @@ so it would become critical for keeping things thread safe.
 ### Method: append
 
 Takes a Buffer as its first argument and it adds it the the internal storage.
+
+### Method: getInternalBuffer
+
+Gets the internal storage buffer. This was originally a frozen array, then it was a copy and now
+it's the actual internal Buffer. The first two turned out to be performance bottlenecks when ran
+through the Node.js profiler. It's important that you don't modify the the Buffer and any mechanism
+I can think of to prevent accidental write operations causes performance issues, so this is the
+tradeoff.
 
 ## Unit tests
 
@@ -251,4 +259,4 @@ Enter OTP: ******
 
 ## Notes
 
-The list returned by `proxy.getBufferCopy()` is in reverse order, so if you want the last item, you would do `proxy.createTicket(0)`.
+The list returned by `proxy.getInternalBuffer()` is in reverse order, so if you want the last item, you would do `proxy.createTicket(0)`.

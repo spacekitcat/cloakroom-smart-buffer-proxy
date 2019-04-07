@@ -3,7 +3,7 @@ import Proxy from '../src/proxy';
 describe('The `Proxy` class', () => {
   describe('when the class is instantiated', () => {
     it('should return the expected result', () => {
-      expect(new Proxy().getBufferCopy()).toMatchObject(Buffer.from([]));
+      expect(new Proxy().getInternalBuffer()).toMatchObject(Buffer.from([]));
     });
 
     it('should set the internal maximum size', () => {
@@ -11,10 +11,10 @@ describe('The `Proxy` class', () => {
     });
   });
 
-  describe('The `getBufferCopy` method', () => {
+  describe('The `getInternalBuffer` method', () => {
     describe('when the `Proxy` instance is instantiated', () => {
       it('should return an empty buffer object', () => {
-        expect(new Proxy().getBufferCopy()).toMatchObject(Buffer.from([]));
+        expect(new Proxy().getInternalBuffer()).toMatchObject(Buffer.from([]));
       });
 
       it('should set the internal maximum size', () => {
@@ -37,7 +37,7 @@ describe('The `Proxy` class', () => {
         const expecteBufferContents = [0x41, 0x43, 0x49, 0x44];
         const proxy = new Proxy();
         proxy.append(Buffer.from(expecteBufferContents));
-        expect(proxy.getBufferCopy()).toMatchObject(
+        expect(proxy.getInternalBuffer()).toMatchObject(
           Buffer.from(expecteBufferContents)
         );
       });
@@ -50,7 +50,7 @@ describe('The `Proxy` class', () => {
         const proxy = new Proxy();
         proxy.append(Buffer.from(expecteBufferContentsOne));
         proxy.append(Buffer.from(expecteBufferContentsTwo));
-        expect(proxy.getBufferCopy()).toMatchObject(
+        expect(proxy.getInternalBuffer()).toMatchObject(
           Buffer.from(expecteBufferContentsOne.concat(expecteBufferContentsTwo))
         );
       });
@@ -63,7 +63,7 @@ describe('The `Proxy` class', () => {
         const proxy = new Proxy(4);
         proxy.append(Buffer.from(expecteBufferContentsOne));
         proxy.append(Buffer.from(expecteBufferContentsTwo));
-        expect(proxy.getBufferCopy()).toMatchObject(
+        expect(proxy.getInternalBuffer()).toMatchObject(
           Buffer.from([0x49, 0x55, 0x60, 0x65])
         );
       });

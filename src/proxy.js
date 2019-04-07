@@ -5,7 +5,6 @@ class Proxy {
     this.offset = 0;
     this.internalCache = Buffer.from([]);
     this.maximumSize = maximumSize;
-    this._updateReadOnlyBuffer();
   }
 
   append(appendContent) {
@@ -18,12 +17,6 @@ class Proxy {
         this.internalCache.length - this.maximumSize
       );
     }
-
-    this._updateReadOnlyBuffer();
-  }
-
-  _updateReadOnlyBuffer() {
-    this.readOnlyBuffer = Buffer.from(this.internalCache);
   }
 
   _translate(index) {
@@ -59,8 +52,8 @@ class Proxy {
     return this.maximumSize;
   }
 
-  getBufferCopy() {
-    return this.readOnlyBuffer;
+  getInternalBuffer() {
+    return this.internalCache;
   }
 }
 
