@@ -27,7 +27,9 @@ class Proxy {
   _resolveValue(ticketId) {
     const internalCacheArray = ticketId + this.offset + 1;
     const resolvedValue = this.internalCache[internalCacheArray];
-    return resolvedValue ? resolvedValue : null;
+    return resolvedValue === null || resolvedValue === undefined
+      ? null
+      : resolvedValue;
   }
 
   createTicket(index) {

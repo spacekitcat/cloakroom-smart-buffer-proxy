@@ -84,6 +84,26 @@ describe('The `Proxy` class', () => {
           offset: 0
         });
       });
+
+      describe('and the key is `0x00`', () => {
+        it('should return a ticket with the expected id', () => {
+          const expectedElementValue = 0x00;
+          const expecteBufferContents = [
+            0x41,
+            0x43,
+            0x49,
+            expectedElementValue
+          ];
+          const proxy = new Proxy();
+          proxy.append(Buffer.from(expecteBufferContents));
+          const clockroomTicket = proxy.createTicket(0);
+
+          expect(proxy.resolveTicket(clockroomTicket)).toMatchObject({
+            value: expectedElementValue,
+            offset: 0
+          });
+        });
+      });
     });
 
     describe('when the `Proxy` instance has received two lots of content', () => {
